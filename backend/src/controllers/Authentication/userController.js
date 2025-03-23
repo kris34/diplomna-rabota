@@ -12,6 +12,9 @@ userController.post('/auth/register', async (req, res) => {
 
         const registeredUser = await createUser({ first_name, last_name, email, password, confirm_password });
 
+        if (!registeredUser) {
+            throw new Error('Error in user registration!');
+        };
 
         res.status(200).send('ok')
     } catch (err) {
@@ -23,6 +26,10 @@ userController.post('/auth/register', async (req, res) => {
 userController.post('/auth/login', async (req, res) => {
     try {
         const { email, password } = req?.body;
+
+        if (!email || !password) {
+            throw new Error('Invalid login credentials!');
+        };
 
         const loggedIn = await login({ email, password });
 
