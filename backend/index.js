@@ -3,6 +3,7 @@ const { poolPromise, dbConfig } = require("./src/database/db");
 const userController = require('./src/controllers/Authentication/userController');
 const session = require('express-session');
 const MSSQLStore = require('connect-mssql-v2');
+const cors = require('cors');
 
 const port = 3003;
 
@@ -12,6 +13,11 @@ async function start() {
         const app = express();
         app.set('trust proxy', true);
         app.use(express.json());
+
+        app.use(cors({
+            origin: 'http://localhost:5173',
+            credentials: true,
+        }));
 
         const sessionStore = new MSSQLStore(dbConfig, {
             table: 'sessions',

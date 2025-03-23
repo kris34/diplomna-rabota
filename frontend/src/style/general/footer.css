@@ -1,0 +1,45 @@
+.footer {
+    background-color: #f8f8f8;
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    position: fixed; /* Fix to bottom */
+    bottom: 0; /* Align to bottom */
+    left: 0; /* Ensure it spans full width */
+  }
+  
+  .footer-text {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
+  /* Ensure content doesn’t overlap footer */
+  body {
+    margin: 0;
+    padding-bottom: 60px; /* Space for footer height (20px padding * 2 + text height) */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .footer {
+      padding: 15px;
+    }
+    .footer-text {
+      font-size: 0.85rem;
+    }
+  }
+  
+  @media (max-width: 450px) {
+    .footer {
+      padding: 10px;
+    }
+    .footer-text {
+      font-size: 0.8rem;
+    }
+    body {
+      padding-bottom: 50px; /* Adjust for smaller footer */
+    }
+  }
