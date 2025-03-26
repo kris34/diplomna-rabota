@@ -38,7 +38,11 @@ const RegisterForm = () => {
         confirm_password: formData?.confirmPassword,
       });
 
-      setMessage('Registration successful!');
+      if (!response) {
+        setMessage('Invalid login response!');
+        throw new Error('Invalid login response!');
+      }
+
       setFormData({
         firstName: '',
         lastName: '',
