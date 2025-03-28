@@ -1,3 +1,4 @@
+const { poolPromise } = require('../../database/db');
 const { createUser, login } = require('../../services/userService');
 
 const userController = require('express').Router();
@@ -50,6 +51,20 @@ userController.post('/auth/logout', async (req, res) => {
         console.log(err);
         res.status(400).send('Logout error!');
     };
+});
+
+userController.get('/auth/validate', async (req, res) => {
+    try {
+        const session = req?.session?.user;
+
+        if (!session) {
+            return res.status(400).send('invalid')
+        };
+
+        res.status(200).send('valid');
+    } catch (err) {
+        console.log(err);
+    }
 })
 
 module.exports = userController;

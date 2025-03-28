@@ -1,16 +1,23 @@
-import { createBrowserRouter } from 'react-router-dom';
-import App from '../App';
-import LoginForm from '../components/auth/LoginForm';
+import { createBrowserRouter } from "react-router-dom";
+import App from "../App";
+import LoginForm from "../components/auth/LoginForm";
+import PrivateRoute from "../components/general/PrivateRoute";
 
-let router = createBrowserRouter([
+const router = createBrowserRouter([
   {
-    path: '/',
-    Component: App,
+    path: "/",
+    element: <PrivateRoute />, // Wrap with PrivateRoute
+    children: [
+      {
+        path: "/",
+        element: <App />,
+      },
+    ],
   },
-  { 
-    path: '/login',
-    Component: LoginForm
-  }
+  {
+    path: "/login",
+    element: <LoginForm />,
+  },
 ]);
 
 export default router;

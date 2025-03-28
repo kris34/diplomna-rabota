@@ -1,8 +1,8 @@
 const express = require("express");
-const { poolPromise, dbConfig } = require("./src/database/db");
+const { poolPromise, config } = require("./src/database/db");
 const userController = require('./src/controllers/Authentication/userController');
 const session = require('express-session');
-const MSSQLStore = require('connect-mssql-v2');
+const MSSQLStore = require('connect-mssql')(session);
 const cors = require('cors');
 
 const port = 3003;
@@ -19,17 +19,13 @@ async function start() {
             credentials: true,
         }));
 
-        const sessionStore = new MSSQLStore(dbConfig, {
-            table: 'sessions',
-            ttl: 86400,
-            autoRemove: true
-        });
+        const store = new MSSQLStore(config);
 
         app.use(session({
             secret: 'secret_sessions_key',
             resave: false,
             saveUninitialized: false,
-            store: sessionStore,
+            store: store,
             name: 'auth',
             cookie: {
                 httpOnly: true,
