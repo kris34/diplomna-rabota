@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import '../../style/login_page/loginForm.css';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setIsShowLoginForm,
+  setIsShowRegisterForm,
+} from '../../redux/slices/generalSlice';
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -12,6 +19,7 @@ const RegisterForm = () => {
   });
 
   const [message, setMessage] = useState('');
+  const isShowLoginForm = useSelector((state) => state.general.isShowLoginForm);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,6 +27,11 @@ const RegisterForm = () => {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const showLoginForm = () => {
+    dispatch(setIsShowLoginForm(true));
+    dispatch(setIsShowRegisterForm(false));
   };
 
   const handleSubmit = async (e) => {
@@ -63,85 +76,91 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="login_form_wrap">
-      <div className="login_form_header">
-        <p className="login_header_title">Sign up</p>
-      </div>
+    <div className='centered_content_page'>
+      <div className="login_form_wrap">
+        <div className="login_form_header">
+          <p className="login_header_title">Sign up</p>
+        </div>
 
-      <div className="login_form_body">
-        <form onSubmit={handleSubmit}>
-          <div className="login_input_wrap">
-            <p className="login_input_title">First Name</p>
-            <input
-              className="login_input"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              placeholder="Your First name here..."
-              required
-            />
-          </div>
+        <div className="login_form_body">
+          <form onSubmit={handleSubmit}>
+            <div className="login_input_wrap">
+              <p className="login_input_title">First Name</p>
+              <input
+                className="login_input"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                placeholder="Your First name here..."
+                required
+              />
+            </div>
 
-          <div className="login_input_wrap">
-            <p className="login_input_title">Last Name</p>
-            <input
-              className="login_input"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              placeholder="Your Last name here..."
-              required
-            />
-          </div>
+            <div className="login_input_wrap">
+              <p className="login_input_title">Last Name</p>
+              <input
+                className="login_input"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                placeholder="Your Last name here..."
+                required
+              />
+            </div>
 
-          <div className="login_input_wrap">
-            <p className="login_input_title">Email address</p>
-            <input
-              className="login_input"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Your Email address here..."
-              required
-            />
-          </div>
+            <div className="login_input_wrap">
+              <p className="login_input_title">Email address</p>
+              <input
+                className="login_input"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Your Email address here..."
+                required
+              />
+            </div>
 
-          <div className="login_input_wrap">
-            <p className="login_input_title">Password</p>
-            <input
-              className="login_input"
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Your Password here..."
-              required
-            />
-          </div>
+            <div className="login_input_wrap">
+              <p className="login_input_title">Password</p>
+              <input
+                className="login_input"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Your Password here..."
+                required
+              />
+            </div>
 
-          <div className="login_input_wrap">
-            <p className="login_input_title">Repeat password</p>
-            <input
-              className="login_input"
-              name="confirmPassword"
-              type="password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="Confirm Password here..."
-              required
-            />
-          </div>
+            <div className="login_input_wrap">
+              <p className="login_input_title">Repeat password</p>
+              <input
+                className="login_input"
+                name="confirmPassword"
+                type="password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                placeholder="Confirm Password here..."
+                required
+              />
+            </div>
 
-          <button type="submit" className="register_button">
-            Sign up
-          </button>
-        </form>
+            <button type="submit" className="register_button">
+              Sign up
+            </button>
+          </form>
 
-        <p className="existing_account_msg">
-          Already have an account? Log in <a>here</a>!
-        </p>
-        {message && <p className="form-message">{message}</p>}
+          <p className="existing_account_msg">
+            Already have an account? Log in{' '}
+            <a className="sign_up_button" onClick={showLoginForm}>
+              here
+            </a>
+            !
+          </p>
+          {message && <p className="form-message">{message}</p>}
+        </div>
       </div>
     </div>
   );

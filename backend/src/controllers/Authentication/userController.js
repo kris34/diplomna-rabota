@@ -35,7 +35,7 @@ userController.post('/auth/login', async (req, res) => {
         const loggedIn = await login({ email, password });
 
         req.session.user = loggedIn;
-        res.status(200).send('ok');
+        res.status(200).send(loggedIn);
     } catch (err) {
         console.log(err);
         res.status(400).send('Login error!');
@@ -58,10 +58,12 @@ userController.get('/auth/validate', async (req, res) => {
         const session = req?.session?.user;
 
         if (!session) {
+            console.log('User is not authorized!');
+            res.clearCookie('auth');
             return res.status(400).send('invalid')
         };
 
-        res.status(200).send('valid');
+        res.status(200).send({ status: 'valid', user_id: session?.id, email: session?.email, first_name: session?.name });
     } catch (err) {
         console.log(err);
     }

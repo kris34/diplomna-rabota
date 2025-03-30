@@ -1,28 +1,40 @@
-import { useEffect, useState } from "react";
-import { useAuth } from "../../providers/authProvider";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../providers/authProvider';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setIsShowLoginForm } from '../../redux/slices/generalSlice';
 
 const PrivateRoute = ({ children }) => {
-  const { checkIfUserIsLoggedIn, isLoggedIn } = useAuth();
+  const dispatch = useDispatch();
+
+  const { isLoggedIn, checkIfUserIsLoggedIn } = useAuth();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true); // Prevent flicker
+
+  async function relocateUserIfAuthenticated() {
+    try {
+      const isLogged = await checkIfUserIsLoggedIn();
+
+      if (!isLogged) {
+        navigate('/login');
+      } else {
+        navigate('/');
+      }
+    } catch (err) {
+      console.log(err);
+      navigate('/login');
+    }
+  }
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const isLogged = await checkIfUserIsLoggedIn();
-      if (!isLogged) {
-        navigate("/login");
-      } else {
-        setLoading(false);
-      }
-    };
-
-    checkAuth();
+    relocateUserIfAuthenticated();
   }, []);
 
-  if (loading) return null; // Prevent rendering during auth check
-
-  return isLoggedIn ? children : null;
+  return (
+    <>
+      {/* {isExpired && <ExpirationWarning isExpired={isExpired} />} */}
+      {children}
+    </>
+  );
 };
 
 export default PrivateRoute;

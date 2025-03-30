@@ -30,10 +30,32 @@
   cursor: pointer;
 }
 
-.lang_icon:active { 
-    transform:  scale(var(--scale-value));
+.lang_icon:active {
+  transform: scale(var(--scale-value));
 }
 
+.header_right_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5em;
+}
+
+.header_welcome_message {
+  color: white;
+}
+
+.sign_in_button {
+  color: white;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+  user-select: none;
+}
+
+.sign_in_button:active {
+  transform: scale(var(--scale-value));
+}
 /* Responsive Header */
 @media (max-width: 768px) {
   .header {

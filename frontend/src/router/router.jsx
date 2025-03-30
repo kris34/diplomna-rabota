@@ -1,22 +1,36 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
-import LoginForm from "../components/auth/LoginForm";
-import PrivateRoute from "../components/general/PrivateRoute";
+import { createBrowserRouter, Navigate } from 'react-router-dom';
+import App from '../App';
+import HomePage from '../pages/HomePage';
+import LoginForm from '../components/auth/LoginForm';
+import PrivateRoute from '../components/general/PrivateRoute';
+import RegisterForm from '../components/auth/RegisterForm';
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <PrivateRoute />, // Wrap with PrivateRoute
+    path: '/',
+    element: (
+      <PrivateRoute>
+        <App />
+      </PrivateRoute>
+    ), // Wrap App with PrivateRoute
     children: [
       {
-        path: "/",
-        element: <App />,
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: 'login',
+        element: <LoginForm />,
+      },
+      {
+        path: 'register',
+        element: <RegisterForm />,
       },
     ],
   },
   {
-    path: "/login",
-    element: <LoginForm />,
+    path: '*',
+    element: <Navigate to="/" replace />,
   },
 ]);
 

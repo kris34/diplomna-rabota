@@ -1,9 +1,15 @@
 .login_form_wrap {
-  padding: 10px;
   display: flex;
   flex-direction: column;
   width: 400px;
   max-width: 100%;
+}
+
+.centered_content_page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .login_form_header {
@@ -14,6 +20,7 @@
 .login_header_title {
   font-weight: 700;
   font-size: 1.5em;
+  margin-top: 20px;
 }
 
 .login_form_body {
@@ -87,14 +94,22 @@ form {
   color: #2e7d32;
 }
 
-.existing_account_msg { 
+.existing_account_msg {
   margin-top: 10px;
+}
+
+.sign_up_button {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.sign_up_button:active {
+  transform: scale(var(--scale-value));
 }
 
 @media (max-width: 450px) {
   .login_form_wrap {
-    width: 100%;
-    padding: 5px;
+    width: 90%;
   }
 
   .register_button {
