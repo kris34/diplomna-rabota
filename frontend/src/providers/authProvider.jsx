@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn,
     checkIfUserIsLoggedIn,
     email,
-    setFirstName
+    setFirstName,
   };
 
   return (

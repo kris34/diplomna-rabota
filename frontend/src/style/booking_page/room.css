@@ -1,0 +1,7 @@
+.room_wrap {
+  height: 180px;
+  width: 180px;
+  display: flex;
+  border: 1px solid red;
+  border-radius: 5px;
+}

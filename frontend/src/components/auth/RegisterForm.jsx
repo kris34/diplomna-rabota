@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../style/login_page/loginForm.css';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setIsShowLoginForm,
-  setIsShowRegisterForm,
-} from '../../redux/slices/generalSlice';
+import { useNavigate } from 'react-router';
+import { useAuth } from '../../providers/authProvider';
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -16,10 +14,12 @@ const RegisterForm = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    role: '',
   });
 
   const [message, setMessage] = useState('');
-  const isShowLoginForm = useSelector((state) => state.general.isShowLoginForm);
+  const navigate = useNavigate();
+  const { isLoggedIn, isAdmin } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,11 +27,6 @@ const RegisterForm = () => {
       ...prev,
       [name]: value,
     }));
-  };
-
-  const showLoginForm = () => {
-    dispatch(setIsShowLoginForm(true));
-    dispatch(setIsShowRegisterForm(false));
   };
 
   const handleSubmit = async (e) => {
@@ -49,6 +44,7 @@ const RegisterForm = () => {
         email: formData.email,
         password: formData.password,
         confirm_password: formData?.confirmPassword,
+        role: isAdmin ? 'admin' : 'user',
       });
 
       if (!response) {
@@ -62,6 +58,7 @@ const RegisterForm = () => {
         email: '',
         password: '',
         confirmPassword: '',
+        role: '',
       });
     } catch (error) {
       if (error.response) {
@@ -75,8 +72,18 @@ const RegisterForm = () => {
     }
   };
 
+  const showLoginForm = () => {
+    navigate('/login');
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn]);
+
   return (
-    <div className='centered_content_page'>
+    <div className="centered_content_page">
       <div className="login_form_wrap">
         <div className="login_form_header">
           <p className="login_header_title">Sign up</p>

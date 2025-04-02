@@ -82,14 +82,12 @@ const LoginForm = () => {
   };
 
   const showRegisterForm = () => {
-    dispatch(setIsShowLoginForm(false));
-    dispatch(setIsShowRegisterForm(true));
+    navigate('/register');
   };
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (isLoggedIn) {
       navigate('/');
-      return;
     }
   }, [isLoggedIn]);
 

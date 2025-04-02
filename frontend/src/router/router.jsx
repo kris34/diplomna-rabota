@@ -4,15 +4,13 @@ import HomePage from '../pages/HomePage';
 import LoginForm from '../components/auth/LoginForm';
 import PrivateRoute from '../components/general/PrivateRoute';
 import RegisterForm from '../components/auth/RegisterForm';
+import ProfilePage from '../components/auth/ProfilePage';
+import BookingPage from '../components/booking_page/BookingPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <PrivateRoute>
-        <App />
-      </PrivateRoute>
-    ), // Wrap App with PrivateRoute
+    element: <App />,
     children: [
       {
         index: true,
@@ -26,6 +24,14 @@ const router = createBrowserRouter([
         path: 'register',
         element: <RegisterForm />,
       },
+      {
+        path: '/profile/:username',
+        element: <ProfilePage />,
+      },
+      { 
+        path: '/book',
+        element: <BookingPage />
+      }
     ],
   },
   {

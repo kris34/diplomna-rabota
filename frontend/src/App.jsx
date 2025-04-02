@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="home_page_container">
       <Header />
-      <Outlet /> {/* This will render the matched route's component */}
+      <Outlet />
       <Footer />
     </div>
   );
